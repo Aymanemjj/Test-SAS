@@ -89,10 +89,10 @@ struct History history[10];
 void ProductListing(int choicePC, int choicePS, int i){
 
     for(int i=0; i<5; i++){
-        printf("%d-|%d.%s     Categorie:%s     Prix:%.2fMAD     Stock:%d\n", i, ProduitList[i].idProduit, ProduitList[i].nom, ProduitList[i].categorie, ProduitList[i].prix, ProduitList[i].stock);    
+        printf("|%d.%s     Categorie:%s     Prix:%.2fMAD     Stock:%d\n",ProduitList[i].idProduit, ProduitList[i].nom, ProduitList[i].categorie, ProduitList[i].prix, ProduitList[i].stock);    
     };
     printf("\n\n");
-    printf("Input 1 to search\nInput 2 to sort\nInput 3 to view details aobut a product:\n");
+    printf("Input 1 to search\nInput 2 to sort\nInput 3 to view details aobut a product:\nAnything else to return\n");
     scanf("%d",&choicePC);
     switch (choicePC) {
         case 1: 
@@ -223,18 +223,19 @@ int Buying(int choicePS){
                 C1.solde = C1.solde-(Quantity*ProduitList[choicePS-1].prix);
                 ProduitList[choicePS-1].stock = ProduitList[choicePS-1].stock-Quantity;
                 printf("Success!!, You bought %d of %s\n",Quantity, ProduitList[choicePS-1].nom);
-                printf("You're total is %.2f MAD, you now have %.2f MAD left in your funds ", Quantity*ProduitList[choicePS-1].prix, C1.solde);
+                printf("You're total is %.2f MAD, you now have %.2f MAD left in your funds\n", Quantity*ProduitList[choicePS-1].prix, C1.solde);
                 printf("Type anything to return to Main menu\n");
                 scanf("%d", &i);
                 
+                 HistoryUpdating(choicePS, Quantity);
             }else{
                 printf("You have insufficiant funds, Pleas deposit more funds to buy this quantity\nYou're total %.2f MAD while you only have %.2f MAD", Quantity*ProduitList[choicePS-1].prix, C1.solde);
                 printf("Type anything to return to Main menu\n");
                 scanf("%d", &i);
-            
+                
             }
     }
-    HistoryUpdating(choicePS, Quantity);
+   
     return Quantity;
 }
 
@@ -276,7 +277,7 @@ int HistoryUpdating(int choicePS, int Quantity) {
 
 void StatsPrinting(struct History history[10], int HistoryOrder){
     for(int i =0;i<HistoryOrder;i++){
-        printf("%d-|%d.%s     Prix:%.2f     Quantity:%d     Total:%.2f\n", i, history[i].Id, history[i].name, history[i].prix, history[i].quantity, history[i].total);    
+        printf("%d-|%d.%s     Prix:%.2f     Quantity:%d     Total:%.2f\n", i+1, history[i].Id, history[i].name, history[i].prix, history[i].quantity, history[i].total);    
     }
     printf("\n\n\n");
 }
